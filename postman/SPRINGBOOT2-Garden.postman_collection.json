@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "da4723d3-3bc1-46b7-a278-5196596b4308",
+		"name": "SPRINGBOOT2-Garden",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST Authentication JWT",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9001/api/auth/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"api",
+						"auth",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Test Resource Hello World",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU3MjY5Nzg4NSwiaWF0IjoxNTcyNjYxODg1fQ.CvD56xeISpy3P5WDDn66YdDv2n_OMOHvuMW79B3wV_Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU3MjI2MDU1NywiaWF0IjoxNTcyMjI0NTU3fQ.yf8Qo15DXC__tnQhq4xUJiGDX37rvlP9yDeQJXTpT_I",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "file",
+					"file": {}
+				},
+				"url": {
+					"raw": "http://localhost:9001/api/auth/test/hello",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"api",
+						"auth",
+						"test",
+						"hello"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Get All Clients",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU3MjY5Nzg4NSwiaWF0IjoxNTcyNjYxODg1fQ.CvD56xeISpy3P5WDDn66YdDv2n_OMOHvuMW79B3wV_Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9001/api/client",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"api",
+						"client"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Get One Client",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU3MjY5Nzg4NSwiaWF0IjoxNTcyNjYxODg1fQ.CvD56xeISpy3P5WDDn66YdDv2n_OMOHvuMW79B3wV_Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "id",
+						"value": "1",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:9001/api/client/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"api",
+						"client",
+						"1"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
