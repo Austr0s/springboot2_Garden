@@ -7,42 +7,42 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.garden.project.model.entity.Client;
-import io.garden.project.repository.ClientRepository;
-import io.garden.project.service.ClientService;
+import io.garden.project.model.entity.Office;
+import io.garden.project.repository.OfficeRepository;
+import io.garden.project.service.OfficeService;
 
 @Service
 @Transactional
-public class ClientServiceIml implements ClientService {
+public class OfficeServiceImpl implements OfficeService {
 	
 	@Autowired
-	private ClientRepository repository;
+	private OfficeRepository repository;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public Optional<Client> findOneById(Long id) {
+	public Optional<Office> findOneById(Long id) {
 		return repository.findById(id);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public Iterable<Client> findAll() {
+	public Iterable<Office> findAll() {
 		return repository.findAll();
 	}
 
 	@Override
-	public Client create(Client entity) {
+	public Office create(Office entity) {
 		return repository.save(entity);
 	}
 
 	@Override
-	public Client update(Client entity) {
+	public Office update(Office entity) {
 		return repository.save(entity);
 	}
 
 	@Override
 	public void delete(Long id) {
-		repository.deleteById(id);		
+		repository.deleteById(id);
 	}
 
 }

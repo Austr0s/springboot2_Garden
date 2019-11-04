@@ -2,46 +2,46 @@ package io.garden.project.service;
 
 import java.util.Optional;
 
-import io.garden.project.model.entity.Client;
+import io.garden.project.model.entity.Office;
 
-public interface ClientService {
-
+public interface OfficeService {
+	
 	/**
 	 * Find Entity by Id.
 	 * 
 	 * @param id of entity that we want to get data.
 	 * @return Optional Entity
 	 */
-	Optional<Client> findOneById(Long id);
-
+	Optional<Office> findOneById(Long id);
+	
 	/**
 	 * Find All Entity data.
 	 * 
 	 * @return List iterable of Entity.
 	 */
-	Iterable<Client> findAll();
-
+	Iterable<Office> findAll();
+	
 	/**
 	 * Create entity received.
 	 * 
 	 * @param entity that we want to create.
 	 * @return entity created.
 	 */
-	Client create(Client entity);
-
+	Office create(Office entity);
+	
 	/**
 	 * Update entity received.
 	 * 
 	 * @param entity that we want to update.
 	 * @return entity updated.
 	 */
-	Client update(Client entity);
-
+	Office update(Office entity);
+	
 	/**
 	 * Delete entity received.
 	 * 
 	 * @param id of entity that we want to delete.
 	 */
-	void delete(Long id);
+	void delete (Long id);
 
 }

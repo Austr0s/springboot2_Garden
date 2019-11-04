@@ -5,12 +5,10 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -41,9 +39,7 @@ public class Client implements Serializable {
 	 * Client ID.
 	 */
 	@Id
-	@GenericGenerator(name = "clientGenerator", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
-			@Parameter(name = "sequence_name", value = "SEQ_CLIENT") })
-	@GeneratedValue(generator = "clientGenerator")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "ID")
 	@ApiModelProperty(notes = "Unique identifier of the Client. No two Clients can have the same id.", example = "1", required = true, position = 0)
 	private Long id;
@@ -61,7 +57,7 @@ public class Client implements Serializable {
 	 */
 	@Size(max = 30)
 	@Column(name = "CONTACT_NAME", length = 30, nullable = true)
-	@ApiModelProperty(notes = "Client Contact Name.", example = "Anne", required = false, position = 2)
+	@ApiModelProperty(notes = "Client's Contact Name.", example = "Anne", required = false, position = 2)
 	private String contactName;
 
 	/**
@@ -69,7 +65,7 @@ public class Client implements Serializable {
 	 */
 	@Size(max = 30)
 	@Column(name = "CONTACT_FIRST_NAME", length = 30, nullable = true)
-	@ApiModelProperty(notes = "Client Contact First Name.", example = "GoldFish", required = false, position = 3)
+	@ApiModelProperty(notes = "Client's Contact First Name.", example = "GoldFish", required = false, position = 3)
 	private String contactFirstName;
 
 	/**
@@ -77,6 +73,7 @@ public class Client implements Serializable {
 	 */
 	@Size(max = 15)
 	@Column(name = "PHONE", length = 15, nullable = false)
+	@ApiModelProperty(notes = "Client's Phone Number.", example = "+34 912365498", required = false, position = 4)
 	private String phone;
 
 	/**
@@ -84,6 +81,7 @@ public class Client implements Serializable {
 	 */
 	@Size(max = 15)
 	@Column(name = "FAX", length = 15, nullable = false)
+	@ApiModelProperty(notes = "Client's Fax Number.", example = "+34 912365498", required = false, position = 5)
 	private String fax;
 
 	/**
@@ -91,6 +89,7 @@ public class Client implements Serializable {
 	 */
 	@Size(max = 50)
 	@Column(name = "LINE_DIRECTION1", length = 50, nullable = false)
+	@ApiModelProperty(notes = "Client's line direction 1.", example = "False Street 52 2 A", required = false, position = 6)
 	private String lineDirection1;
 
 	/**
@@ -98,6 +97,7 @@ public class Client implements Serializable {
 	 */
 	@Size(max = 50)
 	@Column(name = "LINE_DIRECTION2", length = 50, nullable = false)
+	@ApiModelProperty(notes = "Client's line direction 2.", example = "False Street 52 2 B", required = false, position = 7)
 	private String lineDirection2;
 
 	/**
@@ -105,6 +105,7 @@ public class Client implements Serializable {
 	 */
 	@Size(max = 50)
 	@Column(name = "CITY", length = 50, nullable = false)
+	@ApiModelProperty(notes = "Client's City.", example = "Miami", required = false, position = 8)
 	private String city;
 
 	/**
@@ -112,6 +113,7 @@ public class Client implements Serializable {
 	 */
 	@Size(max = 50)
 	@Column(name = "REGION", length = 50, nullable = false)
+	@ApiModelProperty(notes = "City's Region.", example = "Miami", required = false, position = 9)
 	private String region;
 
 	/**
@@ -119,6 +121,7 @@ public class Client implements Serializable {
 	 */
 	@Size(max = 50)
 	@Column(name = "COUNTRY", length = 50, nullable = false)
+	@ApiModelProperty(notes = "Client's Country.", example = "USA", required = false, position = 10)
 	private String country;
 
 	/**
@@ -126,12 +129,14 @@ public class Client implements Serializable {
 	 */
 	@Size(max = 10)
 	@Column(name = "ZIP_CODE", length = 10, nullable = false)
+	@ApiModelProperty(notes = "Client's ZIP Code.", example = "24006", required = false, position = 11)
 	private String zipCode;
 
 	/**
 	 * Client ZipCode
 	 */
 	@Column(name = "CREDIT_LIMIT", nullable = false)
+	@ApiModelProperty(notes = "Client's Credit Limit.", example = "12000.00", required = false, position = 12)
 	private Long creditLimit;
 
 	/**

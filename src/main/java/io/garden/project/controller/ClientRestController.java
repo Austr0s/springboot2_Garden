@@ -3,6 +3,7 @@ package io.garden.project.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,10 +32,8 @@ public class ClientRestController {
 			@ApiResponse(code = 404, message = "The resource  was not found")
 	})	
 	public ResponseEntity<Optional<Client>> getOne(@PathVariable(value = "id") Long id) {
-		
 		Optional<Client> client = service.findOneById(id);
-		
-		return ResponseEntity.ok(client);
+		return (client.isPresent()) ? new ResponseEntity<Optional<Client>>(client, HttpStatus.OK): ResponseEntity.notFound().build();
 	}
 	
 	@GetMapping
@@ -45,10 +44,9 @@ public class ClientRestController {
 			@ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
 			@ApiResponse(code = 404, message = "The resource  was not found")
 	})
-	public ResponseEntity<Iterable<Client>> getAll(){
+	public ResponseEntity<Iterable<Client>> findAllClients(){
 		Iterable<Client> clients = service.findAll();
-		
-		return ResponseEntity.ok(clients);
+		return new ResponseEntity<Iterable<Client>>(clients, HttpStatus.OK);
 	}
 	
 }
