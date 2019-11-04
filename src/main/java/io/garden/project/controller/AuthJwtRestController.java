@@ -16,9 +16,12 @@ import io.garden.project.config.util.JwtUtil;
 import io.garden.project.model.util.AuthenticationRequest;
 import io.garden.project.model.util.AuthenticationResponse;
 import io.garden.project.service.impl.CustomUserDetailsServiceImpl;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
 public class AuthJwtRestController {
 
 	@Autowired
@@ -30,12 +33,15 @@ public class AuthJwtRestController {
 	@Autowired
 	private CustomUserDetailsServiceImpl userDetailsService;
 
-	@GetMapping("/test/hello")
-	public String firstPage() {
-		return "Yo are logged by username and password";
-	}
-
 	@PostMapping("/authenticate")
+	@GetMapping("/{id}")
+	@ApiOperation(value = "JWT request to get Jason Web Token", notes = "It takes authentication to create a new session with jwt", response = ResponseEntity.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Successfully retrieved Access to Application"),
+			@ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
+			@ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
+			@ApiResponse(code = 404, message = "The resource  was not found")
+	})
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)
 			throws Exception {
 
