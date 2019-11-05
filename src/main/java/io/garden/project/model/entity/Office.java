@@ -48,7 +48,7 @@ public class Office implements Serializable {
 	 * Office Code.
 	 */
 	@Size(max = 10)
-	@Column(name = "OFFICE_CODE", length = 10, nullable = false)
+	@Column(name = "CODE", length = 10, nullable = false)
 	@ApiModelProperty(notes = "Office's Code.", example = "BOS-USA", required = true, position = 1)
 	private String code;
 	
@@ -109,4 +109,12 @@ public class Office implements Serializable {
 	@ApiModelProperty(notes = "Office's line direction 2.", example = "False Street 52 2 B", required = false, position = 8)
 	private String lineDirection2;
 
+	@Override
+	public String toString() {
+		String tostring = null;
+		if (id != null) {
+			tostring = id.toString();
+		}
+		return tostring;
+	}
 }

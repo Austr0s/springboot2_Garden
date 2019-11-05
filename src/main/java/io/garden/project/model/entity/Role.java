@@ -5,12 +5,10 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,6 +17,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ *  
+ * @author Austr0s
+ *
+ */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -38,9 +41,7 @@ public class Role implements Serializable{
 	 * Role ID.
 	 */
 	@Id
-	@GenericGenerator(name = "roleGenerator", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
-			@Parameter(name = "sequence_name", value = "SEQ_ROLE") })
-	@GeneratedValue(generator = "roleGenerator")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Long id;
 	

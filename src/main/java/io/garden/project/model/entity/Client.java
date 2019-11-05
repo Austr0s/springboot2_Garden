@@ -4,11 +4,18 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.NotNull;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -19,6 +26,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ *  
+ * @author Austr0s
+ *
+ */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -28,6 +40,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "CLIENT")
 @ApiModel(description = "Class representing a Client tracked by the application.")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Client implements Serializable {
 
 	/**
@@ -142,6 +155,19 @@ public class Client implements Serializable {
 	/**
 	 * Sales Employee Id
 	 */
-	// TODO: RelationShip with Employee Entity
+//	@JsonIgnore
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_SALES_REP_EMPLOYEE", foreignKey = @ForeignKey(name = "FK_SALES_REP_EMPLOYEE"))
+	private Employee salesRepEmployee;
+	
+	@Override
+	public String toString() {
+		String tostring = null;
+		if (id != null) {
+			tostring = id.toString();
+		}
+		return tostring;
+	}
 
 }
