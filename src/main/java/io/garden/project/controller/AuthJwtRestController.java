@@ -16,12 +16,16 @@ import io.garden.project.config.util.JwtUtil;
 import io.garden.project.model.util.AuthenticationRequest;
 import io.garden.project.model.util.AuthenticationResponse;
 import io.garden.project.service.impl.CustomUserDetailsServiceImpl;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@ApiIgnore
+@Api(value = "Authentication", tags = {"Authentication"})
 public class AuthJwtRestController {
 
 	@Autowired

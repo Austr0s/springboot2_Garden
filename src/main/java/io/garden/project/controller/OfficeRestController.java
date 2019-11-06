@@ -2,7 +2,11 @@ package io.garden.project.controller;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,14 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.garden.project.model.entity.Client;
 import io.garden.project.model.entity.Office;
+import io.garden.project.model.util.ResourceNotFoundException;
 import io.garden.project.service.OfficeService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import javassist.NotFoundException;
 
 @RestController
-@RequestMapping("/api/v1/office")
+@RequestMapping("/api/v1/offices")
+@Api(value = "Office", tags = {"Office"})
 public class OfficeRestController {
 	
 	@Autowired
@@ -36,12 +43,11 @@ public class OfficeRestController {
 			@ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
 			@ApiResponse(code = 404, message = "The resource  was not found")
 	})	
-	public ResponseEntity<Optional<Office>> findOfficeById(@PathVariable(value = "id") Long id) {
-		Optional<Office> officeOptional = service.findOneById(id);		
-		return (officeOptional.isPresent()) ? ResponseEntity.ok(officeOptional) : ResponseEntity.notFound().build();
+	public Optional<Office> findOfficeById(@PathVariable(value = "id") Long id) {
+		return service.findOneById(id);
 	}
 	
-	@GetMapping
+	@GetMapping("/offices")
 	@ApiOperation(value = "Find all Clients", notes = "Returns all Offices from Api", response = Client.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Successfully retrieved Offices"),
@@ -49,9 +55,8 @@ public class OfficeRestController {
 			@ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
 			@ApiResponse(code = 404, message = "The resource  was not found")
 	})
-	public ResponseEntity<Iterable<Office>> findAllOffices() {
-		Iterable<Office> officesIterable = service.findAll();
-		return ResponseEntity.ok(officesIterable);
+	public Page<Office> findAllOffices(Pageable pageable) {		
+		return service.findAll(pageable);
 	}
 	
 	@PostMapping
@@ -62,11 +67,8 @@ public class OfficeRestController {
 			@ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
 			@ApiResponse(code = 404, message = "The resource  was not found")
 	})
-	public ResponseEntity<Office> create(@RequestBody(required = true) Office office) {
-		
-		Office officeCreated = service.create(office);
-		
-		return ResponseEntity.ok(officeCreated);
+	public Office create(@Valid @RequestBody(required = true) Office office) { 
+		return service.create(office);
 	}
 	
 	@PutMapping("/{id}")
@@ -77,17 +79,12 @@ public class OfficeRestController {
 			@ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
 			@ApiResponse(code = 404, message = "The resource  was not found")
 	})
-	public ResponseEntity<Office> update(@RequestBody(required = true) Office office, @PathVariable Long id){
-		Optional<Office> officeOptional = service.findOneById(id);
-
-		if (!officeOptional.isPresent())
-			return ResponseEntity.notFound().build();
-
-		office.setId(id);
+	public Office update(@Valid @RequestBody(required = true) Office office, @PathVariable Long id){
+		Office responseOffice = service.findOneById(id).orElseThrow(() -> new ResourceNotFoundException("OfficeId: " + id + " was not found"));
 		
-		Office  officeUpdated = service.update(office);
-
-		return ResponseEntity.ok(officeUpdated);
+		office.setId(responseOffice.getId());
+		
+		return service.update(office);
 	}
 	
 	@DeleteMapping("/{id}")
@@ -98,13 +95,12 @@ public class OfficeRestController {
 			@ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
 			@ApiResponse(code = 404, message = "The resource  was not found")
 	})
-	public void delete(@PathVariable Long id) throws NotFoundException{
-		Optional<Office> officeOptional = service.findOneById(id);
-
-		if (!officeOptional.isPresent())
-			throw new NotFoundException("Entity not found");
-
-		service.delete(id);
+	public ResponseEntity<?> delete(@PathVariable Long id) throws NotFoundException{
+		Office responseOffice = service.findOneById(id).orElseThrow(() -> new ResourceNotFoundException("OfficeId: " + id + " was not found"));
+		
+		service.delete(responseOffice.getId());
+		
+		return ResponseEntity.ok().build();
 	}
 
 }

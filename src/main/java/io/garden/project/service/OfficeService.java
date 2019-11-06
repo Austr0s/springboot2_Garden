@@ -2,6 +2,9 @@ package io.garden.project.service;
 
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import io.garden.project.model.entity.Office;
 
 public interface OfficeService {
@@ -19,7 +22,7 @@ public interface OfficeService {
 	 * 
 	 * @return List iterable of Entity.
 	 */
-	Iterable<Office> findAll();
+	Page<Office> findAll(Pageable pageable);
 	
 	/**
 	 * Create entity received.

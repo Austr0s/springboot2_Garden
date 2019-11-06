@@ -1,45 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<diagram version="1" name="GARDEN_ER.erd">
+<diagram version="1" name="GARDEN_ER-1.erd">
 	<entities>
 		<data-source id="mariaDB-16e0aa5f701-a78574dd71540b7">
-			<entity id="1" name="CLIENT" fq-name="garden.CLIENT" order="0" x="430" y="44">
-				<path name="garden"/>
+			<entity id="1" name="CLIENT" fq-name="gardendb.CLIENT" order="0" x="461" y="277">
+				<path name="gardendb"/>
 			</entity>
-			<entity id="2" name="EMPLOYEE" fq-name="garden.EMPLOYEE" order="1" x="698" y="99">
-				<path name="garden"/>
+			<entity id="2" name="EMPLOYEE" fq-name="gardendb.EMPLOYEE" order="1" x="773" y="360">
+				<path name="gardendb"/>
 			</entity>
-			<entity id="3" name="OFFICE" fq-name="garden.OFFICE" order="2" x="964" y="33">
-				<path name="garden"/>
+			<entity id="3" name="OFFICE" fq-name="gardendb.OFFICE" order="2" x="1051" y="321">
+				<path name="gardendb"/>
 			</entity>
-			<entity id="4" name="ORDER_DETAIL" fq-name="garden.ORDER_DETAIL" order="3" x="20" y="259">
-				<path name="garden"/>
+			<entity id="4" name="ORDER_DETAIL" fq-name="gardendb.ORDER_DETAIL" order="3" x="501" y="77">
+				<path name="gardendb"/>
 			</entity>
-			<entity id="5" name="ORDER_REGISTRATION" fq-name="garden.ORDER_REGISTRATION" order="4" x="198" y="20">
-				<path name="garden"/>
+			<entity id="5" name="ORDER_REGISTRATION" fq-name="gardendb.ORDER_REGISTRATION" order="4" x="223" y="86">
+				<path name="gardendb"/>
 			</entity>
-			<entity id="6" name="PAYMENT" fq-name="garden.PAYMENT" order="5" x="198" y="243">
-				<path name="garden"/>
+			<entity id="6" name="PAYMENT" fq-name="gardendb.PAYMENT" order="5" x="213" y="342">
+				<path name="gardendb"/>
 			</entity>
-			<entity id="7" name="PRODUCT" fq-name="garden.PRODUCT" order="6" x="198" y="422">
-				<path name="garden"/>
+			<entity id="7" name="PERMISSION" fq-name="gardendb.PERMISSION" order="6" x="204" y="668">
+				<path name="gardendb"/>
 			</entity>
-			<entity id="8" name="PRODUCT_RANGE" fq-name="garden.PRODUCT_RANGE" order="7" x="430" y="477">
-				<path name="garden"/>
+			<entity id="8" name="PRODUCT" fq-name="gardendb.PRODUCT" order="7" x="735" y="79">
+				<path name="gardendb"/>
+			</entity>
+			<entity id="9" name="PRODUCT_RANGE" fq-name="gardendb.PRODUCT_RANGE" order="8" x="1008" y="92">
+				<path name="gardendb"/>
+			</entity>
+			<entity id="10" name="ROLE" fq-name="gardendb.`ROLE`" order="9" x="660" y="672">
+				<path name="gardendb"/>
+			</entity>
+			<entity id="11" name="ROLE_PERMISSION" fq-name="gardendb.ROLE_PERMISSION" order="10" x="399" y="682">
+				<path name="gardendb"/>
+			</entity>
+			<entity id="12" name="USER" fq-name="gardendb.`USER`" order="11" x="1093" y="658">
+				<path name="gardendb"/>
+			</entity>
+			<entity id="13" name="USER_ROLE" fq-name="gardendb.USER_ROLE" order="12" x="864" y="670">
+				<path name="gardendb"/>
 			</entity>
 		</data-source>
 	</entities>
 	<relations>
-		<relation name="ORDER_REGISTRATION_ibfk_1" fq-name="garden.ORDER_REGISTRATION.ORDER_REGISTRATION_ibfk_1" type="fk" pk-ref="1" fk-ref="5"/>
-		<relation name="PAYMENT_ibfk_1" fq-name="garden.PAYMENT.PAYMENT_ibfk_1" type="fk" pk-ref="1" fk-ref="6"/>
-		<relation name="CLIENT_ibfk_1" fq-name="garden.CLIENT.CLIENT_ibfk_1" type="fk" pk-ref="2" fk-ref="1"/>
-		<relation name="EMPLOYEE_ibfk_2" fq-name="garden.EMPLOYEE.EMPLOYEE_ibfk_2" type="fk" pk-ref="2" fk-ref="2">
-			<bend type="abs" x="937" y="201"/>
-			<bend type="abs" x="939" y="374"/>
-			<bend type="abs" x="809" y="375"/>
+		<relation name="FK_ORDER_CLIENT" fq-name="gardendb.ORDER_REGISTRATION.FK_ORDER_CLIENT" type="fk" pk-ref="1" fk-ref="5"/>
+		<relation name="FK_PAYMENT_CLIENT" fq-name="gardendb.PAYMENT.FK_PAYMENT_CLIENT" type="fk" pk-ref="1" fk-ref="6"/>
+		<relation name="FK_SALES_REP_EMPLOYEE" fq-name="gardendb.CLIENT.FK_SALES_REP_EMPLOYEE" type="fk" pk-ref="2" fk-ref="1"/>
+		<relation name="FK_ID_BOSS_EMPLOYEE" fq-name="gardendb.EMPLOYEE.FK_ID_BOSS_EMPLOYEE" type="fk" pk-ref="2" fk-ref="2">
+			<bend type="rel" x="1001" y="596"/>
+			<bend type="rel" x="864" y="655"/>
 		</relation>
-		<relation name="EMPLOYEE_ibfk_1" fq-name="garden.EMPLOYEE.EMPLOYEE_ibfk_1" type="fk" pk-ref="3" fk-ref="2"/>
-		<relation name="ORDER_DETAIL_ibfk_1" fq-name="garden.ORDER_DETAIL.ORDER_DETAIL_ibfk_1" type="fk" pk-ref="5" fk-ref="4"/>
-		<relation name="ORDER_DETAIL_ibfk_2" fq-name="garden.ORDER_DETAIL.ORDER_DETAIL_ibfk_2" type="fk" pk-ref="7" fk-ref="4"/>
-		<relation name="PRODUCT_ibfk_1" fq-name="garden.PRODUCT.PRODUCT_ibfk_1" type="fk" pk-ref="8" fk-ref="7"/>
+		<relation name="FK_EMPLOYEE_OFFICE" fq-name="gardendb.EMPLOYEE.FK_EMPLOYEE_OFFICE" type="fk" pk-ref="3" fk-ref="2"/>
+		<relation name="FK_ORDER_DETAIL_REGI" fq-name="gardendb.ORDER_DETAIL.FK_ORDER_DETAIL_REGI" type="fk" pk-ref="5" fk-ref="4"/>
+		<relation name="FK_ACCESS_GRANT_ACCESS" fq-name="gardendb.ROLE_PERMISSION.FK_ACCESS_GRANT_ACCESS" type="fk" pk-ref="7" fk-ref="11"/>
+		<relation name="FK_ORDER_DETAIL_PROD" fq-name="gardendb.ORDER_DETAIL.FK_ORDER_DETAIL_PROD" type="fk" pk-ref="8" fk-ref="4"/>
+		<relation name="FK_PROD_PRODUCT_RANGE" fq-name="gardendb.PRODUCT.FK_PROD_PRODUCT_RANGE" type="fk" pk-ref="9" fk-ref="8"/>
+		<relation name="FK_ROLE_ACCESS" fq-name="gardendb.ROLE_PERMISSION.FK_ROLE_ACCESS" type="fk" pk-ref="10" fk-ref="11"/>
+		<relation name="FK_ROLE_USER_ROLE" fq-name="gardendb.USER_ROLE.FK_ROLE_USER_ROLE" type="fk" pk-ref="10" fk-ref="13"/>
+		<relation name="FK_USER_USER_ROLE" fq-name="gardendb.USER_ROLE.FK_USER_USER_ROLE" type="fk" pk-ref="12" fk-ref="13"/>
 	</relations>
 </diagram>

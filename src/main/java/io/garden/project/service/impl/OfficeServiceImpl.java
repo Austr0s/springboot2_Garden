@@ -3,6 +3,8 @@ package io.garden.project.service.impl;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,8 +28,8 @@ public class OfficeServiceImpl implements OfficeService {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public Iterable<Office> findAll() {
-		return repository.findAll();
+	public Page<Office> findAll(Pageable pageable) {
+		return repository.findAll(pageable);
 	}
 
 	@Override

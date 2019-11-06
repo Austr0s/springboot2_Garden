@@ -152,3 +152,9 @@ select user0_.ID as ID1_1_, user0_.ACTIVE as ACTIVE2_1_, user0_.PASSWORD as PASS
 select user0_.ID as ID1_1_, user0_.ACTIVE as ACTIVE2_1_, user0_.PASSWORD as PASSWORD3_1_, user0_.USERNAME as USERNAME4_1_ from USER user0_ where user0_.USERNAME='admin';
 select roles0_.USER_ID as USER_ID1_2_0_, roles0_.ROLE_ID as ROLE_ID2_2_0_, role1_.ID as ID1_0_1_, role1_.CODE as CODE2_0_1_, role1_.DESCRIPTION as DESCRIPT3_0_1_ from USER_ROLE roles0_ inner join ROLE role1_ on roles0_.ROLE_ID=role1_.ID where roles0_.USER_ID=1;
 
+
+SELECT 1 FROM PAYMENT
+WHERE ID_CLIENT = 3
+
+
+

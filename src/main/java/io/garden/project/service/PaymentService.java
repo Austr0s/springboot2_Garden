@@ -5,9 +5,9 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import io.garden.project.model.entity.Client;
+import io.garden.project.model.entity.Payment;
 
-public interface ClientService {
+public interface PaymentService {
 
 	/**
 	 * Find Entity by Id.
@@ -15,14 +15,15 @@ public interface ClientService {
 	 * @param id of entity that we want to get data.
 	 * @return Optional Entity
 	 */
-	Optional<Client> findOneById(Long id);
+	Optional<Payment> findPaymentByClientIdAndPaymentId(Long clientId, Long paymentId);
 
 	/**
 	 * Find All Entity data.
+	 * @param pageable 
 	 * 
 	 * @return List iterable of Entity.
 	 */
-	Page<Client> findAll(Pageable pageable);
+	Page<Payment> findAllPaymentsByClientId(Long clientId, Pageable pageable);
 
 	/**
 	 * Create entity received.
@@ -30,7 +31,7 @@ public interface ClientService {
 	 * @param entity that we want to create.
 	 * @return entity created.
 	 */
-	Client create(Client entity);
+//	Payment create(Payment entity);
 
 	/**
 	 * Update entity received.
@@ -38,13 +39,12 @@ public interface ClientService {
 	 * @param entity that we want to update.
 	 * @return entity updated.
 	 */
-	Client update(Client entity);
+//	Payment update(Payment entity);
 
 	/**
 	 * Delete entity received.
 	 * 
 	 * @param id of entity that we want to delete.
 	 */
-	void delete(Long id);
-
+//	void delete(Long id);
 }

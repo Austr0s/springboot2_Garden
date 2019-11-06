@@ -14,7 +14,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.sun.istack.NotNull;
 
 import io.swagger.annotations.ApiModel;
@@ -40,7 +46,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "CLIENT")
 @ApiModel(description = "Class representing a Client tracked by the application.")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Client implements Serializable {
 
 	/**
@@ -155,11 +160,15 @@ public class Client implements Serializable {
 	/**
 	 * Sales Employee Id
 	 */
-//	@JsonIgnore
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_SALES_REP_EMPLOYEE", foreignKey = @ForeignKey(name = "FK_SALES_REP_EMPLOYEE"))
-	private Employee salesRepEmployee;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "ID_SALES_REP_EMPLOYEE", foreignKey = @ForeignKey(name = "FK_SALES_REP_EMPLOYEE"), nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = true)
+	@JsonProperty("employeeId")
+	private Employee employee;
+
 	
 	@Override
 	public String toString() {

@@ -15,7 +15,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
 import io.swagger.annotations.ApiModel;
@@ -41,7 +40,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "EMPLOYEE")
 @ApiModel(description = "Class representing a Employee tracked by the application.")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Employee implements Serializable {
 	
 	/**
@@ -75,26 +73,26 @@ public class Employee implements Serializable {
 	
 	@Size(max = 10)
 	@Column(name = "EXTENSION", length = 10, nullable = false)
-	@ApiModelProperty(notes = "Employee's Extension.", example = "Goldberg", required = true, position = 4)
+	@ApiModelProperty(notes = "Employee's Extension.", example = "123456", required = true, position = 4)
 	private String extension;
 	
 	@Size(max = 100)
 	@Column(name = "EMAIL", length = 100, nullable = false)
-	@ApiModelProperty(notes = "Employee's Email.", example = "Goldberg", required = true, position = 5)
+	@ApiModelProperty(notes = "Employee's Email.", example = "employee@email.com", required = true, position = 5)
 	private String email;
 	
 	@Size(max = 50)
 	@Column(name = "WORKSTATION", length = 50, nullable = true)
-	@ApiModelProperty(notes = "Employee's Email.", example = "Goldberg", required = false, position = 5)
+	@ApiModelProperty(notes = "Employee's WorkStation.", example = "CEO", required = false, position = 6)
 	private String workstation;
 	
-//	@JsonIgnore
+	@JsonIgnore
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_OFFICE", foreignKey = @ForeignKey(name = "FK_EMPLOYEE_OFFICE"))
 	private Office office;
 	
-//	@JsonIgnore
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_BOSS_EMPLOYEE")
 	private Employee bossEmployee;
