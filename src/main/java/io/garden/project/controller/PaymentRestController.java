@@ -18,14 +18,14 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping("/api/v1/posts/{clientId}/payments")
+@RequestMapping("/api/v1")
 @Api(value = "Payment", tags = {"Payment"})
 public class PaymentRestController {
 	
 	@Autowired
 	private PaymentService service;
 	
-	@GetMapping("/{paymentId}")
+	@GetMapping("/clients/{clientId}/payments/{paymentId}")
 	@ApiOperation(value = "Find Payment by client Id and Payment Id", notes = "Provide an id  to look up specific Payment from Api", response = Payment.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Successfully retrieved Api"),
@@ -37,7 +37,7 @@ public class PaymentRestController {
 		return service.findPaymentByClientIdAndPaymentId(clientId, paymentId);		
 	}
 	
-	@GetMapping
+	@GetMapping("/clients/{clientId}/payments")
 	@ApiOperation(value = "Find all Payments By Client Id", notes = "Returns all Payments from Api", response = Payment.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Successfully retrieved Payments"),

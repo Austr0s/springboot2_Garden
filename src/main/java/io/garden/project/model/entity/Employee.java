@@ -14,7 +14,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.sun.istack.NotNull;
 
 import io.swagger.annotations.ApiModel;
@@ -53,7 +59,7 @@ public class Employee implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "ID")
-	@ApiModelProperty(notes = "Unique identifier of the Employee. No two Offices can have the same id.", example = "1", required = true, position = 0)
+	@ApiModelProperty(notes = "Unique identifier of the Employee. No two Employees can have the same id.", example = "1", required = true, position = 0)
 	private Long id;
 	
 	@Size(max = 50)
@@ -86,15 +92,23 @@ public class Employee implements Serializable {
 	@ApiModelProperty(notes = "Employee's WorkStation.", example = "CEO", required = false, position = 6)
 	private String workstation;
 	
-	@JsonIgnore
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_OFFICE", foreignKey = @ForeignKey(name = "FK_EMPLOYEE_OFFICE"))
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "ID_OFFICE", foreignKey = @ForeignKey(name = "FK_EMPLOYEE_OFFICE"), nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE) 
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = true)
+	@JsonProperty("officeId")
+	@ApiModelProperty(notes = "Employee's Office.", example = "321", required = true, position = 7)
 	private Office office;
 	
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_BOSS_EMPLOYEE")
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(name = "ID_BOSS_EMPLOYEE", nullable = true)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = true)
+	@JsonProperty("bossId")
+	@ApiModelProperty(notes = "Employee's Boss.", example = "123", required = false, position = 8)
 	private Employee bossEmployee;
 	
 	
