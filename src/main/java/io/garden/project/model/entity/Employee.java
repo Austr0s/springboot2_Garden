@@ -2,6 +2,7 @@ package io.garden.project.model.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -98,16 +99,16 @@ public class Employee implements Serializable {
 	@OnDelete(action = OnDeleteAction.CASCADE) 
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = true)
-	@JsonProperty("officeId")
+	@JsonProperty("office")
 	@ApiModelProperty(notes = "Employee's Office.", example = "321", required = true, position = 7)
 	private Office office;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_BOSS_EMPLOYEE", nullable = true)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = true)
-	@JsonProperty("bossId")
+	@JsonProperty("bossEmployee")
 	@ApiModelProperty(notes = "Employee's Boss.", example = "123", required = false, position = 8)
 	private Employee bossEmployee;
 	

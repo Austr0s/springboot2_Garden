@@ -21,7 +21,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeRepository repository;
 	
 
-
+	
+	@Override
+	public Optional<Employee> findTopByOfficeId(Long officeId) {
+		return repository.findTopByOfficeId(officeId);
+	}
+	
 	@Override
 	public Optional<Employee> findOneEmployee(Long employeeId) {
 		return repository.findById(employeeId);

@@ -8,6 +8,9 @@ import org.springframework.data.domain.Pageable;
 import io.garden.project.model.entity.Client;
 
 public interface ClientService {
+	
+	
+	Optional<Client> findTopByEmployeeId(Long employeeId);
 
 	/**
 	 * Find Entity by Id.

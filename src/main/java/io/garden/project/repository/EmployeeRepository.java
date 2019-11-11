@@ -11,6 +11,8 @@ import io.garden.project.model.entity.Employee;
 
 @Repository
 public interface EmployeeRepository extends CrudRepository<Employee, Long> {
+	
+	Optional<Employee> findTopByOfficeId(Long officeId);
 
 	Optional<Employee> findByIdAndOfficeId(Long employeeId, Long officeId);
 	

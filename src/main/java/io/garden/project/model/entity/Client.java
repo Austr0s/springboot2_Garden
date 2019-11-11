@@ -166,7 +166,7 @@ public class Client implements Serializable {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = true)
-	@JsonProperty("employeeId")
+	@JsonProperty("employee")
 	private Employee employee;
 
 	

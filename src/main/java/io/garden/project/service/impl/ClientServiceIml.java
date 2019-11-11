@@ -47,4 +47,9 @@ public class ClientServiceIml implements ClientService {
 		repository.deleteById(id);		
 	}
 
+	@Override
+	public Optional<Client> findTopByEmployeeId(Long employeeId) {
+		return repository.findTopByEmployeeId(employeeId);
+	}
+
 }

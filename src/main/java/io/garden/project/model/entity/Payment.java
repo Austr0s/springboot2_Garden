@@ -83,7 +83,7 @@ public class Payment implements Serializable {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = true)
-	@JsonProperty("clientId")
+	@JsonProperty("client")
 	private Client client;
 
 }
