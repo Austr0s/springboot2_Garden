@@ -21,7 +21,7 @@ public abstract class AbstractEntity implements Serializable {
 	 * Serial ID
 	 */
 	private static final long serialVersionUID = 803402936016394712L;
-	
+
 	/**
 	 * Date when User is created.
 	 */
@@ -41,6 +41,5 @@ public abstract class AbstractEntity implements Serializable {
 	@Column(name = "UPDATED_AT")
 	@LastModifiedDate
 	private Date updatedAt;
-
 
 }

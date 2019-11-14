@@ -33,7 +33,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- *  
+ * 
  * @author Austr0s
  *
  */
@@ -57,7 +57,7 @@ public class Client implements Serializable {
 	 * Client ID.
 	 */
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	@ApiModelProperty(notes = "Unique identifier of the Client. No two Clients can have the same id.", example = "1", required = true, position = 0)
 	private Long id;
@@ -169,13 +169,11 @@ public class Client implements Serializable {
 	@JsonProperty("employee")
 	private Employee employee;
 
-	
 	@Override
 	public String toString() {
 		String tostring = null;
-		if (id != null) {
+		if (id != null)
 			tostring = id.toString();
-		}
 		return tostring;
 	}
 

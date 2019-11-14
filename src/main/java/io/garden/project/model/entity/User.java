@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- *  
+ * 
  * @author Austr0s
  *
  */
@@ -38,7 +38,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "USER")
 public class User implements Serializable {
-	
+
 	/**
 	 * Serial ID.
 	 */
@@ -48,17 +48,17 @@ public class User implements Serializable {
 	 * User ID.
 	 */
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Long id;
-	
+
 	/**
 	 * Username.
 	 */
 	@Size(max = 50)
 	@Column(name = "USERNAME", length = 50, nullable = false)
 	private String userName;
-	
+
 	/**
 	 * User Password.
 	 */
@@ -72,21 +72,20 @@ public class User implements Serializable {
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	@Column(name = "ACTIVE")
 	private Boolean active;
-	
+
 	/**
 	 * Role entity.
 	 */
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	private List<Role> roles;
-	
+
 	@Override
 	public String toString() {
 		String tostring = null;
-		if (id != null) {
+		if (id != null)
 			tostring = id.toString();
-		}
 		return tostring;
 	}
-	
+
 }

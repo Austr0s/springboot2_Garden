@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- *  
+ * 
  * @author Austr0s
  *
  */
@@ -30,41 +30,40 @@ import lombok.Setter;
 @Builder
 @Entity
 @Table(name = "ROLE")
-public class Role implements Serializable{
-	
+public class Role implements Serializable {
+
 	/**
 	 * Serial ID.
 	 */
 	private static final long serialVersionUID = -4451972217280551456L;
-	
+
 	/**
 	 * Role ID.
 	 */
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Long id;
-	
+
 	/**
 	 * Role Code.
 	 */
 	@Size(max = 50)
 	@Column(name = "CODE", length = 50, nullable = false)
 	private String code;
-	
+
 	/**
 	 * Role Description.
 	 */
 	@Size(max = 50)
 	@Column(name = "DESCRIPTION", length = 50, nullable = false)
 	private String description;
-	
+
 	@Override
 	public String toString() {
 		String tostring = null;
-		if (id != null) {
+		if (id != null)
 			tostring = id.toString();
-		}
 		return tostring;
 	}
 

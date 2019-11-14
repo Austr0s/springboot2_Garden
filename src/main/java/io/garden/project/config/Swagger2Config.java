@@ -22,42 +22,33 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class Swagger2Config {
-   
-    @Bean
+
+	@Bean
 	public Docket newsApi() {
-	    return new Docket(DocumentationType.SWAGGER_2)
-	            .select()
-	            .paths(PathSelectors.any())
-	            .apis(RequestHandlerSelectors.basePackage("io.garden.project"))
-	            .build()
-	            .securitySchemes(Lists.newArrayList(apiKey()))
-	            .securityContexts(Lists.newArrayList(securityContext()))
-	            .apiInfo(apiInfo());
+		return new Docket(DocumentationType.SWAGGER_2).select().paths(PathSelectors.any())
+				.apis(RequestHandlerSelectors.basePackage("io.garden.project")).build()
+				.securitySchemes(Lists.newArrayList(apiKey())).securityContexts(Lists.newArrayList(securityContext()))
+				.apiInfo(apiInfo());
 	}
 
 	@Bean
 	SecurityContext securityContext() {
-	    return SecurityContext.builder()
-	            .securityReferences(defaultAuth())
-	            .forPaths(PathSelectors.any())
-	            .build();
+		return SecurityContext.builder().securityReferences(defaultAuth()).forPaths(PathSelectors.any()).build();
 	}
 
 	List<SecurityReference> defaultAuth() {
-	    AuthorizationScope authorizationScope
-	            = new AuthorizationScope("global", "accessEverything");
-	    AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-	    authorizationScopes[0] = authorizationScope;
-	    return Lists.newArrayList(
-	            new SecurityReference("JWT", authorizationScopes));
+		AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+		AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+		authorizationScopes[0] = authorizationScope;
+		return Lists.newArrayList(new SecurityReference("JWT", authorizationScopes));
 	}
 
 	private ApiKey apiKey() {
-	    return new ApiKey("JWT", "Authorization", "header");
+		return new ApiKey("JWT", "Authorization", "header");
 	}
 
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder().title("GARDEN REST API").version("1.0.0").build();
 	}
-	    
+
 }

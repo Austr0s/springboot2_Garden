@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import io.garden.project.model.entity.Office;
 
 public interface OfficeService {
-	
+
 	/**
 	 * Find Entity by Id.
 	 * 
@@ -16,14 +16,14 @@ public interface OfficeService {
 	 * @return Optional Entity
 	 */
 	Optional<Office> findOneById(Long id);
-	
+
 	/**
 	 * Find All Entity data.
 	 * 
 	 * @return List iterable of Entity.
 	 */
 	Page<Office> findAll(Pageable pageable);
-	
+
 	/**
 	 * Create entity received.
 	 * 
@@ -31,7 +31,7 @@ public interface OfficeService {
 	 * @return entity created.
 	 */
 	Office create(Office entity);
-	
+
 	/**
 	 * Update entity received.
 	 * 
@@ -39,12 +39,12 @@ public interface OfficeService {
 	 * @return entity updated.
 	 */
 	Office update(Office entity);
-	
+
 	/**
 	 * Delete entity received.
 	 * 
 	 * @param id of entity that we want to delete.
 	 */
-	void delete (Long id);
+	void delete(Long id);
 
 }

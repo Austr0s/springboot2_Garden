@@ -34,7 +34,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- *  
+ * 
  * @author Austr0s
  *
  */
@@ -48,35 +48,35 @@ import lombok.Setter;
 @Table(name = "PAYMENT")
 @ApiModel(description = "Class representing a Payment tracked by the application.")
 public class Payment implements Serializable {
-	
+
 	/**
 	 * Default Serial ID.
 	 */
 	private static final long serialVersionUID = 2904547345719167780L;
-	
+
 	/**
 	 * Payment ID.
 	 */
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	@ApiModelProperty(notes = "Unique identifier of the Employee. No two Payments can have the same id.", example = "1", required = true, position = 0)
 	private Long id;
-	
+
 	@Size(max = 40)
 	@Column(name = "PAYMENT_TYPE", length = 40, nullable = false)
 	private String paymentType;
-	
+
 	@Size(max = 50)
 	@Column(name = "ID_TRANSACTION", length = 50, nullable = false)
 	private String idTransaction;
-	
+
 	@Column(name = "PAYMENT_DATE", nullable = false)
 	private Date paymentDate;
-	
+
 	@Column(name = "TOTAL", nullable = false)
 	private Long total;
-	
+
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "ID_CLIENT", foreignKey = @ForeignKey(name = "FK_PAYMENT_CLIENT"), nullable = false)

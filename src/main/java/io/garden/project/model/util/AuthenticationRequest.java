@@ -12,5 +12,5 @@ public class AuthenticationRequest implements Serializable {
 	private static final long serialVersionUID = -4070766724193556083L;
 	private String username;
 	private String password;
-	
+
 }

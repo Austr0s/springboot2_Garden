@@ -16,22 +16,20 @@ import io.garden.project.service.EmployeeService;
 @Service
 @Transactional
 public class EmployeeServiceImpl implements EmployeeService {
-	
+
 	@Autowired
 	private EmployeeRepository repository;
-	
 
-	
 	@Override
 	public Optional<Employee> findTopByOfficeId(Long officeId) {
 		return repository.findTopByOfficeId(officeId);
 	}
-	
+
 	@Override
 	public Optional<Employee> findOneEmployee(Long employeeId) {
 		return repository.findById(employeeId);
 	}
-	
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public Optional<Employee> findByIdAndOfficeId(Long employeeId, Long officeId) {

@@ -44,8 +44,7 @@ public class AuthJwtRestController {
 			@ApiResponse(code = 200, message = "Successfully retrieved Access to Application"),
 			@ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
 			@ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
-			@ApiResponse(code = 404, message = "The resource  was not found")
-	})
+			@ApiResponse(code = 404, message = "The resource  was not found") })
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)
 			throws Exception {
 

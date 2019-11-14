@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
 import io.garden.project.model.entity.Client;
 
 @Repository
-public interface ClientRepository extends CrudRepository<Client, Long>{
+public interface ClientRepository extends CrudRepository<Client, Long> {
 
 	Optional<Client> findTopByEmployeeId(Long employeeId);
 
 	Page<Client> findAll(Pageable pageable);
-	
+
 }

@@ -9,7 +9,7 @@ import io.garden.project.model.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-	
+
 	/**
 	 * Query to get User by UserName
 	 * 

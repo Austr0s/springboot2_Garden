@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = "io.garden.project.repository")
 @EntityScan(basePackages = "io.garden.project.model.entity")
 public class GardenProjectApplication {
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(GardenProjectApplication.class, args);
 	}

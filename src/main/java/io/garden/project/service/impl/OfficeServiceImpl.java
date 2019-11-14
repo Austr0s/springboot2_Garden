@@ -16,7 +16,7 @@ import io.garden.project.service.OfficeService;
 @Service
 @Transactional
 public class OfficeServiceImpl implements OfficeService {
-	
+
 	@Autowired
 	private OfficeRepository repository;
 

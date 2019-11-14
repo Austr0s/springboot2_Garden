@@ -1,7 +1,7 @@
 package io.garden.project.model.entity;
 
 /**
- *  
+ * 
  * @author Austr0s
  *
  */

@@ -96,7 +96,7 @@ public class OfficeRestController {
 		Office responseOffice = service.findOneById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Office Id: " + id + " was not found"));
 		Optional<Employee> hasGotEmployees = employeeService.findTopByOfficeId(responseOffice.getId());
-		
+
 		if (hasGotEmployees.isPresent())
 			throw new ResourceNotFoundException("Office Id: " + id
 					+ " has got Employees. If you want to delete this office...  you have to delete Employees' relationship first");

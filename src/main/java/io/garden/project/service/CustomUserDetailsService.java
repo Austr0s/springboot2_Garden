@@ -3,7 +3,7 @@ package io.garden.project.service;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public interface CustomUserDetailsService {
-	
+
 	/**
 	 * Method to set User and load it from username.
 	 * 

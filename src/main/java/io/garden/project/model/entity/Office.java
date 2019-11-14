@@ -29,17 +29,17 @@ import lombok.Setter;
 @Table(name = "OFFICE")
 @ApiModel(description = "Class representing a Office tracked by the application.")
 public class Office implements Serializable {
-	
+
 	/**
 	 * Default Serial ID.
 	 */
 	private static final long serialVersionUID = 5002473950037365011L;
-	
+
 	/**
 	 * Office ID.
 	 */
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	@ApiModelProperty(notes = "Unique identifier of the Office. No two Offices can have the same id.", example = "1", required = true, position = 0)
 	private Long id;
@@ -51,7 +51,6 @@ public class Office implements Serializable {
 	@Column(name = "CODE", length = 10, nullable = false)
 	@ApiModelProperty(notes = "Office's Code.", example = "BOS-USA", required = true, position = 1)
 	private String code;
-	
 
 	/**
 	 * Client City
@@ -84,7 +83,7 @@ public class Office implements Serializable {
 	@Column(name = "ZIP_CODE", length = 10, nullable = false)
 	@ApiModelProperty(notes = "Office's ZIP Code.", example = "24006", required = false, position = 5)
 	private String zipCode;
-	
+
 	/**
 	 * Client Phone
 	 */
@@ -92,7 +91,7 @@ public class Office implements Serializable {
 	@Column(name = "PHONE", length = 20, nullable = false)
 	@ApiModelProperty(notes = "Office's Phone Number.", example = "+34 912365498", required = false, position = 6)
 	private String phone;
-	
+
 	/**
 	 * Client Line Direction 1
 	 */
@@ -112,9 +111,8 @@ public class Office implements Serializable {
 	@Override
 	public String toString() {
 		String tostring = null;
-		if (id != null) {
+		if (id != null)
 			tostring = id.toString();
-		}
 		return tostring;
 	}
 }

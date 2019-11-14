@@ -8,9 +8,9 @@ import org.springframework.data.domain.Pageable;
 import io.garden.project.model.entity.Employee;
 
 public interface EmployeeService {
-	
+
 	Optional<Employee> findTopByOfficeId(Long officeId);
-	
+
 	Optional<Employee> findOneEmployee(Long employeeId);
 
 	Optional<Employee> findByIdAndOfficeId(Long employeeId, Long officeId);

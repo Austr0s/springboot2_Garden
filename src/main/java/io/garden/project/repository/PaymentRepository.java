@@ -10,9 +10,8 @@ import io.garden.project.model.entity.Payment;
 
 public interface PaymentRepository extends CrudRepository<Payment, Long> {
 
-	
-	Optional<Payment> findByIdAndClientId(Long paymentId, Long clientId);	
-	
+	Optional<Payment> findByIdAndClientId(Long paymentId, Long clientId);
+
 	Page<Payment> findByClientId(Long clientId, Pageable pageable);
-	
+
 }

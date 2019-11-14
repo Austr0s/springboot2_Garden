@@ -34,13 +34,12 @@ public class EmployeeRestController {
 
 	@Autowired
 	private EmployeeService service;
-	
+
 	@Autowired
 	private ClientService clientService;
-	
+
 	@Autowired
 	private OfficeService officeService;
-
 
 	@GetMapping("/employees/{employeeId}")
 	public ResponseEntity<?> findOneEmployee(@PathVariable Long employeeId) {
@@ -48,61 +47,63 @@ public class EmployeeRestController {
 				.orElseThrow(() -> new ResourceNotFoundException("Employee Id: " + employeeId + " was not found"));
 		return ResponseEntity.ok(employeeResonse);
 	}
-	
+
 	@GetMapping("/offices/{officeId}/employees/{employeeId}")
-	public ResponseEntity<?> findByIdAndOfficeId(@PathVariable Long officeId, @PathVariable Long employeeId){
+	public ResponseEntity<?> findByIdAndOfficeId(@PathVariable Long officeId, @PathVariable Long employeeId) {
 		Employee employeeResonse = service.findByIdAndOfficeId(employeeId, officeId)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee Id: " + employeeId + " was not found"));
-		
+
 		return ResponseEntity.ok(employeeResonse);
 	}
-	
+
 	@GetMapping("/employees/{bossId}/{employeeId}")
-	public ResponseEntity<?> findByIdAndBossEmployeeId(@PathVariable Long bossId, @PathVariable Long employeeId){
+	public ResponseEntity<?> findByIdAndBossEmployeeId(@PathVariable Long bossId, @PathVariable Long employeeId) {
 		Employee employeeResonse = service.findByIdAndBossEmployeeId(employeeId, bossId)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee Id: " + employeeId + " was not found"));
-		
+
 		return ResponseEntity.ok(employeeResonse);
 	}
-	
+
 	@GetMapping("/offices/{officeId}/employees")
-	public Page<Employee> findByOfficeId(@PathVariable Long officeId, Pageable pageable){
+	public Page<Employee> findByOfficeId(@PathVariable Long officeId, Pageable pageable) {
 		return service.findByOfficeId(officeId, pageable);
 	}
-	
+
 	@GetMapping("/bosses/{bossId}/employees")
-	public Page<Employee> findByBossEmployeeId(@PathVariable Long bossId, Pageable pageable){
+	public Page<Employee> findByBossEmployeeId(@PathVariable Long bossId, Pageable pageable) {
 		return service.findByBossEmployeeId(bossId, pageable);
 	}
-	
+
 	@GetMapping("/employees")
-	public Page<Employee> findAll(Pageable pageable){
+	public Page<Employee> findAll(Pageable pageable) {
 		return service.findAll(pageable);
 	}
-	
+
 	@PostMapping("/employees")
 	public Employee create(@Valid @RequestBody(required = true) Employee employee) {
-		
+
 		validateOffice(employee.getOffice().getId());
-		
+
 		return service.create(employee);
 	}
-	
+
 	@PutMapping("/employees/{employeeId}")
-	public ResponseEntity<?> update(@Valid @RequestBody(required = true) Employee employee, @PathVariable Long employeeId) {
-		if(!employee.getId().equals(employeeId))
-			new ResourceNotFoundException("Employee Id: " + employeeId + " isn't the same of Employee to update: " + employee.getId());
-		
+	public ResponseEntity<?> update(@Valid @RequestBody(required = true) Employee employee,
+			@PathVariable Long employeeId) {
+		if (!employee.getId().equals(employeeId))
+			new ResourceNotFoundException(
+					"Employee Id: " + employeeId + " isn't the same of Employee to update: " + employee.getId());
+
 		Employee responseEmployee = service.findOneEmployee(employeeId)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee Id: " + employeeId + " was not found"));
 
 		if (validateOffice(responseEmployee.getOffice().getId()))
 			return null;
-		
-		Office responseOffice = officeService.findOneById(responseEmployee.getOffice().getId()).orElseThrow(() -> new ResourceNotFoundException("Office Id: " + responseEmployee.getOffice().getId()
-					+ " Doesn't exist. You can't create an Employee without Office."));
 
-		
+		Office responseOffice = officeService.findOneById(responseEmployee.getOffice().getId())
+				.orElseThrow(() -> new ResourceNotFoundException("Office Id: " + responseEmployee.getOffice().getId()
+						+ " Doesn't exist. You can't create an Employee without Office."));
+
 		employee.setId(responseEmployee.getId());
 
 		return ResponseEntity.ok(service.update(employee));
@@ -112,9 +113,9 @@ public class EmployeeRestController {
 	public ResponseEntity<?> delete(@PathVariable Long employeeId) throws NotFoundException {
 		Employee responseEmployee = service.findOneEmployee(employeeId)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee Id: " + employeeId + " was not found"));
-		
+
 		Optional<Client> hasGotClients = clientService.findTopByEmployeeId(responseEmployee.getId());
-		
+
 		if (hasGotClients.isPresent())
 			throw new ResourceNotFoundException("Employee Id: " + employeeId
 					+ " has got Clients. If you want to delete this Employee...  you have to delete Clients' relationship first");
@@ -123,8 +124,7 @@ public class EmployeeRestController {
 
 		return ResponseEntity.noContent().build();
 	}
-	
-	
+
 	private boolean validateOffice(Long officeId) {
 		Optional<Office> responseOffice = officeService.findOneById(officeId);
 		return !responseOffice.isPresent();

@@ -16,10 +16,10 @@ import io.garden.project.service.ClientService;
 @Service
 @Transactional
 public class ClientServiceIml implements ClientService {
-	
+
 	@Autowired
 	private ClientRepository repository;
-	
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public Optional<Client> findOneById(Long id) {
@@ -28,7 +28,7 @@ public class ClientServiceIml implements ClientService {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public 	Page<Client> findAll(Pageable pageable) {
+	public Page<Client> findAll(Pageable pageable) {
 		return repository.findAll(pageable);
 	}
 
@@ -43,8 +43,8 @@ public class ClientServiceIml implements ClientService {
 	}
 
 	@Override
-	public void delete(Long id) {		
-		repository.deleteById(id);		
+	public void delete(Long id) {
+		repository.deleteById(id);
 	}
 
 	@Override
