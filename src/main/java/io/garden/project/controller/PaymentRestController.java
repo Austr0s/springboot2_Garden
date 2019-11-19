@@ -7,10 +7,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.garden.project.model.entity.Client;
 import io.garden.project.model.entity.Payment;
+import io.garden.project.model.util.ResourceNotFoundException;
+import io.garden.project.service.ClientService;
 import io.garden.project.service.PaymentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,6 +29,9 @@ public class PaymentRestController {
 
 	@Autowired
 	private PaymentService service;
+	
+	@Autowired
+	private ClientService clientService;
 
 	@GetMapping("/clients/{clientId}/payments/{paymentId}")
 	@ApiOperation(value = "Find Payment by client Id and Payment Id", notes = "Provide an id  to look up specific Payment from Api", response = Payment.class)
@@ -45,20 +53,22 @@ public class PaymentRestController {
 		return service.findAllPaymentsByClientId(clientId, pageable);
 	}
 
-//	@PostMapping
-//	@ApiOperation(value = "Create a new Payment", notes = "Returns new Payment created and saved into Api", response = Payment.class)
-//	@ApiResponses(value = {
-//			@ApiResponse(code = 200, message = "Successfully Saved Payment"),
-//			@ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
-//			@ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
-//			@ApiResponse(code = 404, message = "The resource  was not found")
-//	})
-//	public ResponseEntity<Payment> create(@RequestBody(required = true) Payment office) {
-//		
-//		Payment paymentCreated = service.create(office);
-//		
-//		return ResponseEntity.ok(paymentCreated);
-//	}
+	@PostMapping("/payments")
+	@ApiOperation(value = "Create a new Payment", notes = "Returns new Payment created and saved into Api", response = Payment.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully Saved Payment"),
+			@ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
+			@ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
+			@ApiResponse(code = 404, message = "The resource  was not found") })
+	public Payment create(@RequestBody(required = true) Payment payment) {
+
+		Optional<Client> responseClient = clientService.findOneById(payment.getClient().getId());
+		
+		if(!responseClient.isPresent())
+			throw new ResourceNotFoundException("Client Id: " + payment.getClient().getId()
+					+ " Doesn't exist. You can't create a Payment without any Client.");
+		
+		return service.create(payment);
+	}
 
 //	@PutMapping("/{id}")
 //	@ApiOperation(value = "Update an existing Payment", notes = "Returns Payment updated and saved into Api", response = Payment.class)

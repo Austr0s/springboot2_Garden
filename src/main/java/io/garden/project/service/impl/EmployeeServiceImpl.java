@@ -21,11 +21,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeRepository repository;
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public Optional<Employee> findTopByOfficeId(Long officeId) {
 		return repository.findTopByOfficeId(officeId);
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public Optional<Employee> findOneEmployee(Long employeeId) {
 		return repository.findById(employeeId);
 	}

@@ -32,7 +32,7 @@ public interface PaymentService {
 	 * @param entity that we want to create.
 	 * @return entity created.
 	 */
-//	Payment create(Payment entity);
+	Payment create(Payment entity);
 
 	/**
 	 * Update entity received.

@@ -56,8 +56,8 @@ public class EmployeeRestController {
 		return ResponseEntity.ok(employeeResonse);
 	}
 
-	@GetMapping("/employees/{bossId}/{employeeId}")
-	public ResponseEntity<?> findByIdAndBossEmployeeId(@PathVariable Long bossId, @PathVariable Long employeeId) {
+	@GetMapping("/bosses/{bossId}/employees/{employeeId}")
+	public ResponseEntity<?> findByBossIdAndEmployeeId(@PathVariable Long bossId, @PathVariable Long employeeId) {
 		Employee employeeResonse = service.findByIdAndBossEmployeeId(employeeId, bossId)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee Id: " + employeeId + " was not found"));
 
@@ -82,7 +82,11 @@ public class EmployeeRestController {
 	@PostMapping("/employees")
 	public Employee create(@Valid @RequestBody(required = true) Employee employee) {
 
-		validateOffice(employee.getOffice().getId());
+		Optional<Office> responseOffice = officeService.findOneById(employee.getOffice().getId());
+
+		if (!responseOffice.isPresent())
+			throw new ResourceNotFoundException("Office Id: " + employee.getOffice().getId()
+					+ " Doesn't exist. You can't create an Employee without Office.");
 
 		return service.create(employee);
 	}
@@ -91,18 +95,17 @@ public class EmployeeRestController {
 	public ResponseEntity<?> update(@Valid @RequestBody(required = true) Employee employee,
 			@PathVariable Long employeeId) {
 		if (!employee.getId().equals(employeeId))
-			new ResourceNotFoundException(
+			throw new ResourceNotFoundException(
 					"Employee Id: " + employeeId + " isn't the same of Employee to update: " + employee.getId());
 
 		Employee responseEmployee = service.findOneEmployee(employeeId)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee Id: " + employeeId + " was not found"));
 
-		if (validateOffice(responseEmployee.getOffice().getId()))
-			return null;
+		Optional<Office> responseOffice = officeService.findOneById(responseEmployee.getOffice().getId());
 
-		Office responseOffice = officeService.findOneById(responseEmployee.getOffice().getId())
-				.orElseThrow(() -> new ResourceNotFoundException("Office Id: " + responseEmployee.getOffice().getId()
-						+ " Doesn't exist. You can't create an Employee without Office."));
+		if (!responseOffice.isPresent())
+			throw new ResourceNotFoundException("Office Id: " + responseEmployee.getOffice().getId()
+					+ " Doesn't exist. You can't create an Employee without Office.");
 
 		employee.setId(responseEmployee.getId());
 
@@ -123,14 +126,6 @@ public class EmployeeRestController {
 		service.delete(responseEmployee.getId());
 
 		return ResponseEntity.noContent().build();
-	}
-
-	private boolean validateOffice(Long officeId) {
-		Optional<Office> responseOffice = officeService.findOneById(officeId);
-		return !responseOffice.isPresent();
-//		if(!responseOffice.isPresent())
-//			throw new ResourceNotFoundException("Office Id: " + officeId
-//					+ " Doesn't exist. You can't create an Employee without Office.");
 	}
 
 }

@@ -17,21 +17,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.garden.project.model.entity.Client;
+import io.garden.project.model.entity.Employee;
+import io.garden.project.model.util.ResourceNotFoundException;
 import io.garden.project.service.ClientService;
+import io.garden.project.service.EmployeeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping("/api/v1/clients")
+@RequestMapping("/api/v1")
 @Api(value = "Client", tags = { "Client" })
 public class ClientRestController {
 
 	@Autowired
 	private ClientService service;
 
-	@GetMapping("/{id}")
+	@Autowired
+	private EmployeeService employeeService;
+
+	@GetMapping("/clients/{id}")
 	@ApiOperation(value = "Find client by Id", notes = "Provide an id  to look up specific Client from Api", response = Client.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved Client"),
 			@ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
@@ -42,7 +48,7 @@ public class ClientRestController {
 		return (client.isPresent()) ? new ResponseEntity<>(client, HttpStatus.OK) : ResponseEntity.notFound().build();
 	}
 
-	@GetMapping
+	@GetMapping("/clients")
 	@ApiOperation(value = "Find all Clients", notes = "Returns all Clients from Api", response = Client.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved Clients"),
 			@ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
@@ -52,36 +58,40 @@ public class ClientRestController {
 		return service.findAll(pageable);
 	}
 
-	@PostMapping
+	@PostMapping("/clients")
 	@ApiOperation(value = "Create a new Client", notes = "Returns new Client created and saved into Api", response = Client.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully Saved Client"),
 			@ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
 			@ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
 			@ApiResponse(code = 404, message = "The resource  was not found") })
-	public ResponseEntity<Client> create(@RequestBody(required = true) Client office) {
+	public Client create(@RequestBody(required = true) Client client) {
 
-		Client clientCreated = service.create(office);
+		Optional<Employee> responseEmployee = employeeService.findOneEmployee(client.getEmployee().getId());
 
-		return ResponseEntity.ok(clientCreated);
+		if (!responseEmployee.isPresent())
+			throw new ResourceNotFoundException("Employee Id: " + client.getEmployee().getId()
+					+ " Doesn't exist. You can't create a Client without an Employee.");
+
+		return service.create(client);
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping("/clients/{id}")
 	@ApiOperation(value = "Update an existing Client", notes = "Returns Client updated and saved into Api", response = Client.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully Updated Client"),
 			@ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
 			@ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
 			@ApiResponse(code = 404, message = "The resource  was not found") })
-	public ResponseEntity<Client> update(@RequestBody(required = true) Client office, @PathVariable Long id) {
-		Optional<Client> clientOptional = service.findOneById(id);
+	public ResponseEntity<?> update(@RequestBody(required = true) Client client, @PathVariable Long id) {
+		
+		if(!client.getId().equals(id))
+			throw new ResourceNotFoundException(
+					"Client Id: " + id + " isn't the same of Client to update: " + client.getId());
+		
+		Client responseClient = service.findOneById(id).orElseThrow(() -> new ResourceNotFoundException("Client Id: " + id + " was not found"));
 
-		if (!clientOptional.isPresent())
-			return ResponseEntity.notFound().build();
+		client.setId(responseClient.getId());
 
-		office.setId(id);
-
-		Client clientUpdated = service.update(office);
-
-		return ResponseEntity.ok(clientUpdated);
+		return ResponseEntity.ok(service.update(client));
 	}
 
 	@DeleteMapping("/{id}")

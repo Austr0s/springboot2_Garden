@@ -32,10 +32,10 @@ public class PaymentServiceImpl implements PaymentService {
 		return repository.findByClientId(clientId, pageable);
 	}
 
-//	@Override
-//	public Payment create(Payment entity) {
-//		return repository.save(entity);
-//	}
+	@Override
+	public Payment create(Payment entity) {
+		return repository.save(entity);
+	}
 
 //	@Override
 //	public Payment update(Payment entity) {

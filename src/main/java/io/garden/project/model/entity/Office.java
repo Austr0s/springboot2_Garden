@@ -19,6 +19,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * 
+ * @author Austr0s
+ *
+ */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -53,7 +58,7 @@ public class Office implements Serializable {
 	private String code;
 
 	/**
-	 * Client City
+	 * Office City
 	 */
 	@Size(max = 30)
 	@Column(name = "CITY", length = 30, nullable = false)
@@ -61,7 +66,7 @@ public class Office implements Serializable {
 	private String city;
 
 	/**
-	 * Client Region
+	 * Office Region
 	 */
 	@Size(max = 50)
 	@Column(name = "REGION", length = 50, nullable = false)
@@ -69,7 +74,7 @@ public class Office implements Serializable {
 	private String region;
 
 	/**
-	 * Client Country
+	 * Office Country
 	 */
 	@Size(max = 50)
 	@Column(name = "COUNTRY", length = 50, nullable = false)
@@ -77,7 +82,7 @@ public class Office implements Serializable {
 	private String country;
 
 	/**
-	 * Client ZipCode
+	 * Office ZipCode
 	 */
 	@Size(max = 10)
 	@Column(name = "ZIP_CODE", length = 10, nullable = false)
@@ -85,7 +90,7 @@ public class Office implements Serializable {
 	private String zipCode;
 
 	/**
-	 * Client Phone
+	 * Office Phone
 	 */
 	@Size(max = 20)
 	@Column(name = "PHONE", length = 20, nullable = false)
@@ -93,7 +98,7 @@ public class Office implements Serializable {
 	private String phone;
 
 	/**
-	 * Client Line Direction 1
+	 * Office Line Direction 1
 	 */
 	@Size(max = 50)
 	@Column(name = "LINE_DIRECTION1", length = 50, nullable = false)
@@ -101,7 +106,7 @@ public class Office implements Serializable {
 	private String lineDirection1;
 
 	/**
-	 * Client Line Direction 2
+	 * Office Line Direction 2
 	 */
 	@Size(max = 50)
 	@Column(name = "LINE_DIRECTION2", length = 50, nullable = false)

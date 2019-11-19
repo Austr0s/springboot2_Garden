@@ -157,4 +157,10 @@ SELECT 1 FROM PAYMENT
 WHERE ID_CLIENT = 3
 
 
+select employee0_.ID as ID1_1_, employee0_.ID_BOSS_EMPLOYEE as ID_BOSS_8_1_, employee0_.EMAIL as EMAIL2_1_, employee0_.EXTENSION as EXTENSIO3_1_, employee0_.FIRSTNAME as FIRSTNAM4_1_, employee0_.LASTNAME as LASTNAME5_1_, employee0_.NAME as NAME6_1_, employee0_.ID_OFFICE as ID_OFFIC9_1_, employee0_.WORKSTATION as WORKSTAT7_1_ from EMPLOYEE employee0_ left outer join EMPLOYEE employee1_ on employee0_.ID_BOSS_EMPLOYEE=employee1_.ID where employee0_.ID=? and employee1_.ID=?
+
+
+
+SELECT * FROM PAYMENT WHERE ID_CLIENT = 38;
+
 
